@@ -1,16 +1,16 @@
 <template>
   <div>
-    <Header />
+    <TheHeader />
     <Nuxt />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
-import Header from '@/components/Header.vue'
+import { Component, Vue } from 'nuxt-property-decorator';
+import TheHeader from '~/components/TheHeader.vue';
 
 @Component({
-  components: { Header }
+  components: { TheHeader }
 })
 export default class DefaultLayout extends Vue {}
 </script>

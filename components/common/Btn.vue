@@ -1,26 +1,24 @@
 <template>
-  <a class="btn" :class="{ outline }" v-on="$listeners" @click="onClick">
+  <component :is="tag" class="btn" :class="{ outline, full, [`size-${size}`]: size }" v-on="$listeners" @click="onClick">
     <slot name="default">
       {{ text }}
     </slot>
 
     <div @click.stop>
-      <slot name="modal" :show="modal.show" />
+      <slot name="modal" :modal="modal" />
     </div>
-  </a>
+  </component>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import { Component, Vue, Prop } from 'nuxt-property-decorator';
 
-@Component<Btn>({
-  mounted () {
-
-  }
-})
+@Component<Btn>({})
 export default class Btn extends Vue {
-  @Prop({ type: String, default: 'div' }) public tag!: string;
+  @Prop({ type: String, default: 'button' }) public tag!: string;
   @Prop({ type: Boolean, default: false }) public outline!: boolean;
+  @Prop({ type: Boolean, default: false }) public full!: boolean;
+  @Prop({ type: String }) public size!: string;
   @Prop({ type: String }) public text!: string;
 
   public modal = {
@@ -29,7 +27,7 @@ export default class Btn extends Vue {
 
   public onClick () {
     if (this.$scopedSlots.modal) {
-      this.modal.show = !this.modal.show
+      this.modal.show = !this.modal.show;
     }
   }
 }
@@ -45,6 +43,24 @@ export default class Btn extends Vue {
 
   &.outline {
     @apply text-hi-brand bg-white;
+  }
+
+  &.full {
+    @apply w-full;
+  }
+
+  &.size {
+    &-sm {
+      @apply h-8;
+    }
+
+    &-md {
+      @apply h-10;
+    }
+
+    &-lg {
+      @apply h-12;
+    }
   }
 }
 </style>
