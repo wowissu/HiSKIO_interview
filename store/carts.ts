@@ -1,8 +1,8 @@
 import { Module, VuexAction, VuexModule, VuexMutation } from 'nuxt-property-decorator';
 import _ from 'lodash';
-import * as ls from 'local-storage';
-import { CartsAddManyItem, CartsItem, CartsInfo, CartsStoreItem } from '~/@types/carts';
-import { LocalStorageName } from '~/@types/app';
+import { CartsAddManyItem, CartsItem, CartsInfo } from '~/@types/carts';
+import { getLocalCartsItems, setLocalCartsItems } from '~/functions/carts.fn';
+import { hasAccessToken } from '~/functions/member.fn';
 
 @Module({
   name: 'carts',
@@ -67,18 +67,16 @@ export default class CartsModule extends VuexModule {
   }
 
   @VuexAction({ rawError: true })
-  public removeCartsItem (id: CartsItem['id']) {
+  public async removeCartsItem (id: CartsItem['id']) {
     const items = getLocalCartsItems().filter(item => item.id !== id);
     setLocalCartsItems(items);
 
+    if (hasAccessToken()) {
+      await this.store.$axios.$delete('/carts', {
+        data: { items: [{ id, coupon: '' }] }
+      });
+    }
+
     return this.fetchCartItems();
   }
-}
-
-function getLocalCartsItems (): CartsStoreItem[] {
-  return ls.get<CartsStoreItem[]>(LocalStorageName.Carts) ?? [];
-}
-
-function setLocalCartsItems (items: CartsStoreItem[]) {
-  return ls.set(LocalStorageName.Carts, items);
 }

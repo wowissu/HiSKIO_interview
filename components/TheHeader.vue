@@ -5,7 +5,7 @@
         <div class="flex items-center justify-start flex-2">
           <!-- logo -->
           <div class="h-full w-auto flex items-center mr-2 md:mr-8">
-            <div class="logo-hiskio" />
+            <nuxt-link to="/" class="block logo-hiskio" />
           </div>
           <!-- search bar -->
           <div class="flex items-center justify-start">
@@ -27,12 +27,16 @@
             <nuxt-link to="https://hiskio.com/account/courses/continue" class="whitespace-no-wrap hover:text-hi-brand">
               我的課程
             </nuxt-link>
+
+            <div class="whitespace-no-wrap hover:text-hi-brand cursor-pointer" @click="logout">
+              登出
+            </div>
           </div>
 
           <!-- 購物車/FAQ -->
           <div class="flex items-center space-x-3">
             <!-- cart -->
-            <a class="cursor-pointer text-gray-400" :class="{ 'active-cart': cartsItems.length }" @click="openCarts">
+            <a class="cursor-pointer text-gray-400" :class="{ 'active-cart': cartsItems.length }" @click.stop.prevent="openCarts">
               <fa icon="shopping-cart" />
             </a>
             <!-- FAQ -->
@@ -72,6 +76,7 @@
 import { Component, Vue } from 'nuxt-property-decorator';
 import Btn from '@/components/common/Btn.vue';
 import LoginModal from '@/components/member/LoginModal.vue';
+import { AppEmit } from '~/@types/app';
 
 @Component({
   components: { Btn, LoginModal }
@@ -86,12 +91,15 @@ export default class TheHeader extends Vue {
   }
 
   get isLogin () {
-    console.log(this.$memberStore.isLogin);
     return this.$memberStore.isLogin;
   }
 
   public openCarts () {
-    // this.$root.$emit();
+    this.$root.$emit(AppEmit.OpenCartsItems, true);
+  }
+
+  public logout () {
+    this.$memberStore.doLogout();
   }
 }
 </script>

@@ -2,7 +2,7 @@
   <div class="course-page">
     <div class="w-full p-4">
       <header class="flex items-center justify-between w-full mb-5">
-        <h1 class="text-xl sm:text-2xl text-title-gray">
+        <h1 class="text-xl sm:text-2xl text-gray-454545">
           正在募資中的課程
         </h1>
         <a

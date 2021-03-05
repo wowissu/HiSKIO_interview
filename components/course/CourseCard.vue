@@ -23,7 +23,7 @@
         </div>
         <!-- title box -->
         <div class="w-full px-2 hidden md:block">
-          <h1 class="sm:line-clamp-2 text-title-gray text-xl">{{ course.title }}</h1>
+          <h1 class="sm:line-clamp-2 text-gray-454545 text-xl">{{ course.title }}</h1>
         </div>
         <!-- detail box -->
         <div class="w-full px-2 md:space-y-2 flex flex-col justify-between md:pb-2">
@@ -47,8 +47,8 @@
           <div class="w-full order-3 md:order-none">
             <!-- 課程金額 -->
             <div class="flex items-center">
-              <p class="text-hi-price leading-5 mr-1 font-medium text-sm sm:text-xl">${{ toPrice(currentPrice.price || course.fixed_price) }}</p>
-              <p v-show="currentPrice.fundraising" class="text-gray-500 text-sm line-through">${{ toPrice(course.fixed_price) }}</p>
+              <p class="text-hi-price leading-5 mr-1 font-medium text-sm sm:text-xl">${{ $price(currentPrice.price || course.fixed_price) }}</p>
+              <p v-show="currentPrice.fundraising" class="text-gray-500 text-sm line-through">${{ $price(course.fixed_price) }}</p>
             </div>
           </div>
 
@@ -56,7 +56,7 @@
       </div>
       <!-- mobile title -->
       <div class="w-full px-2 md:hidden">
-        <h1 class="line-clamp-1 text-title-gray text-lg">{{ course.title }}</h1>
+        <h1 class="line-clamp-1 text-gray-454545 text-lg">{{ course.title }}</h1>
       </div>
     </a>
   </div>
@@ -67,8 +67,7 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator';
 import dayjs from 'dayjs';
 import { Course } from '~/@types/course';
 import Progress from '~/components/common/Progress.vue';
-
-const priceFormatter = new Intl.NumberFormat();
+import { price } from '~/helper';
 
 @Component({
   components: {
@@ -98,32 +97,20 @@ export default class CourseCard extends Vue {
     return this.$cartsStore.items.some(item => item.id === this.course.id.toString());
   }
 
-  public toPrice (val: number) {
-    return priceFormatter.format(val);
-  }
-
   public toggleItemInCarts () {
     if (this.inCarts) {
-      this.removeItem();
+      this.$cartsStore.removeCartsItem(this.course.id.toString());
     } else {
-      this.addItem();
+      this.$cartsStore.addCartsItem({
+        coupon: '',
+        items: [
+          {
+            id: this.course.id.toString(),
+            coupon: ''
+          }
+        ]
+      });
     }
-  }
-
-  public addItem () {
-    this.$cartsStore.addCartsItem({
-      coupon: '',
-      items: [
-        {
-          id: this.course.id.toString(),
-          coupon: ''
-        }
-      ]
-    });
-  }
-
-  public removeItem () {
-    this.$cartsStore.removeCartsItem(this.course.id.toString());
   }
 }
 </script>

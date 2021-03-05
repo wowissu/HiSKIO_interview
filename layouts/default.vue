@@ -1,18 +1,22 @@
 <template>
   <div class="default-layout">
     <TheHeader />
-    <div class="max-w-6xl mx-auto">
+
+    <main class="max-w-6xl mx-auto">
       <Nuxt />
-    </div>
+    </main>
+
+    <CartsDrawer />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator';
 import TheHeader from '~/components/TheHeader.vue';
+import CartsDrawer from '~/components/carts/CartsDrawer.vue';
 
-@Component({
-  components: { TheHeader },
+@Component<DefaultLayout>({
+  components: { TheHeader, CartsDrawer },
   middleware: ['init']
 })
 export default class DefaultLayout extends Vue {}

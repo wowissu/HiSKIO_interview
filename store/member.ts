@@ -1,7 +1,7 @@
 import { Module, VuexAction, VuexModule, VuexMutation } from 'nuxt-property-decorator';
-import * as ls from 'local-storage';
 import { Member, MemberAuth, MemberToken } from '~/@types/member';
-import { LocalStorageName } from '~/@types/app';
+import { LoginError } from '~/exception';
+import { clearLogin, hasAccessToken, saveLogin } from '~/functions/member.fn';
 @Module({
   name: 'member',
   namespaced: true,
@@ -11,7 +11,7 @@ export default class MemberModule extends VuexModule {
   public member: Member | null = null;
 
   get isLogin () {
-    return this.member !== null;
+    return this.member !== null && hasAccessToken();
   }
 
   @VuexMutation
@@ -26,7 +26,20 @@ export default class MemberModule extends VuexModule {
 
   @VuexAction({ commit: 'setLogin', rawError: true })
   public doLogin (postdata: MemberAuth) {
-    return this.store.$axios.$post<MemberToken>('/auth/login', postdata);
+    return this.store.$axios.post<MemberToken>('/auth/login', postdata).then((res) => {
+      if (res.status === 202) {
+        throw new LoginError(res as any);
+      }
+
+      return res.data;
+    });
+  }
+
+  @VuexAction({ rawError: true })
+  public doLogout () {
+    this.store.$axios.$post<MemberToken>('/auth/logout');
+    clearLogin();
+    window.location.reload();
   }
 
   @VuexAction({ commit: 'setMember', rawError: true })
@@ -39,10 +52,4 @@ export default class MemberModule extends VuexModule {
       return Promise.resolve(null);
     }
   }
-}
-
-function saveLogin (info: MemberToken) {
-  ls.set(LocalStorageName.AccessToken, info.access_token || '');
-  ls.set(LocalStorageName.ExpiresIn, info.expires_in || '');
-  ls.set(LocalStorageName.TokenType, info.token_type || '');
 }

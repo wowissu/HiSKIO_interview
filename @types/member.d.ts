@@ -14,3 +14,7 @@ export interface MemberToken {
   'expires_in': number;
   'token_type': string;
 }
+
+export interface LoginErrorResponse {
+  message: string
+}

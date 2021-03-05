@@ -28,7 +28,3 @@ declare module 'vuex-module-decorators' {
     store: AppVuexStore;
   }
 }
-
-declare module 'vue/types/vue' {
-  export interface Vue extends PrototypeMods {}
-}

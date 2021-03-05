@@ -64,6 +64,7 @@ import { MemberAuth } from '@/@types/member';
 import Modal from '../common/Modal.vue';
 import Input from '../common/Input.vue';
 import Btn from '../common/Btn.vue';
+import { LoginError } from '~/exception';
 
 @Component({
   components: { Modal, Input, Btn }
@@ -76,10 +77,20 @@ export default class LoginModal extends Vue {
     password: 'small4herp'
   }
 
-  public onSubmit () {
-    this.$memberStore.doLogin(this.postdata);
+  public async onSubmit () {
+    try {
+      await this.$memberStore.doLogin(this.postdata);
+
+      window.location.reload();
+      this.$emit('change', false);
+    } catch (err) {
+      if (err instanceof LoginError) {
+        alert(`"${err.message}" \n API沒看到登出或者強制登入功能，看到此訊息請到官網執行登出。`);
+      }
+    }
 
     // TODO 缺少 verify 與 notify
+    // 要做嗎 ... 0.0
   }
 }
 </script>

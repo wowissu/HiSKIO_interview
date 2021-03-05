@@ -1,5 +1,5 @@
 export enum AppEmit {
-  OpenCartsNav = 'OpenCartsNav'
+  OpenCartsItems = 'OpenCartsItems'
 }
 
 export enum LocalStorageName {

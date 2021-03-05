@@ -1,4 +1,3 @@
-
 module.exports = {
   theme: {
     flex: {
@@ -24,8 +23,10 @@ module.exports = {
         'hi-white': '#bfbfbf',
         'hi-gray': '#8c8c8c',
         'hi-price': '#454545',
+        'hi-carts-title': '#595959',
+        'dis-price': '#e34a4a',
         'input-gray': '#fafafa',
-        'title-gray': '#454545'
+        'gray-454545': '#454545'
       },
       inset: {
         '30px': '30px'
