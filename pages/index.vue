@@ -1,38 +1,25 @@
 <template>
-  <div class="container">
+  <div class="index-page">
     <div>
-      <Logo />
       <h1 class="title">
         HiSKIO
       </h1>
       <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+        <Btn :to="{ name: 'course' }" outline size="lg">
+          募資課程
+        </Btn>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
-import Logo from '@/components/Logo.vue'
+import { Component, Vue } from 'nuxt-property-decorator';
+import Logo from '@/components/Logo.vue';
+import Btn from '@/components/common/Btn.vue';
 
 @Component({
-  components: { Logo }
+  components: { Logo, Btn }
 })
 export default class IndexPage extends Vue {
 
@@ -45,7 +32,7 @@ export default class IndexPage extends Vue {
 @apply min-h-screen flex justify-center items-center text-center mx-auto;
 }
 */
-.container {
+.index-page {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;

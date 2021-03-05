@@ -59,9 +59,8 @@
 </template>
 
 <script lang="ts">
-import { Component, getModule, ModelSync, Vue } from 'nuxt-property-decorator';
+import { Component, ModelSync, Vue } from 'nuxt-property-decorator';
 import { MemberAuth } from '@/@types/member';
-import MemberModule from '@/store/member';
 import Modal from '../common/Modal.vue';
 import Input from '../common/Input.vue';
 import Btn from '../common/Btn.vue';
@@ -78,13 +77,9 @@ export default class LoginModal extends Vue {
   }
 
   public onSubmit () {
-    console.log(this.postdata);
+    this.$memberStore.doLogin(this.postdata);
 
-    const memberStore = getModule(MemberModule, this.$store);
-
-    memberStore.doLogin(this.postdata);
-
-    this.$dialo;
+    // TODO 缺少 verify 與 notify
   }
 }
 </script>

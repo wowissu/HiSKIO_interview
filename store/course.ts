@@ -2,12 +2,12 @@ import { Module, VuexAction, VuexModule, VuexMutation } from 'nuxt-property-deco
 import { Course } from '~/@types/course';
 
 @Module({
-  name: 'member',
+  name: 'course',
   namespaced: true,
   stateFactory: true
 })
 export default class CourseModule extends VuexModule {
-  public courses: Course[] | null = null;
+  public courses: Course[] = [];
 
   @VuexMutation
   public setCourses (val: CourseModule['courses']) {
@@ -15,11 +15,13 @@ export default class CourseModule extends VuexModule {
   }
 
   /** 取得課程列表 */
-  @VuexAction({ rawError: true })
+  @VuexAction({ commit: 'setCourses', rawError: true })
   public fetchCourses () {
     try {
-      this.store.$axios.$get<Course[]>('​/courses​/fundraising');
+      return this.store.$axios.$get<Course[]>('/courses/fundraising');
     } catch (err) {
+      console.error(err);
+
       return Promise.resolve<Course[]>([]);
     }
   }

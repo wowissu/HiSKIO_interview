@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <div class="default-layout">
     <TheHeader />
-    <Nuxt />
+    <div class="max-w-6xl mx-auto">
+      <Nuxt />
+    </div>
   </div>
 </template>
 
@@ -10,7 +12,8 @@ import { Component, Vue } from 'nuxt-property-decorator';
 import TheHeader from '~/components/TheHeader.vue';
 
 @Component({
-  components: { TheHeader }
+  components: { TheHeader },
+  middleware: ['init']
 })
 export default class DefaultLayout extends Vue {}
 </script>

@@ -17,7 +17,7 @@ export interface Course {
   'prices': CoursePrice[],
 
   /** 講師資訊 */
-  'lectures': Lectures[]
+  'lecturers': Lecturers[]
 }
 
 export interface CoursePrice {
@@ -31,7 +31,7 @@ export interface CoursePrice {
   'schedule_at': string
 }
 
-export interface Lectures {
+export interface Lecturers {
   'id': number,
   'username': string,
   'avatar': string

@@ -14,7 +14,13 @@
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.1",
     "@nuxtjs/axios": "^5.12.5",
+    "@tailwindcss/aspect-ratio": "^0.2.0",
+    "@tailwindcss/line-clamp": "^0.2.0",
+    "@types/lodash": "^4.14.168",
     "core-js": "^3.8.3",
+    "dayjs": "^1.10.4",
+    "local-storage": "^2.0.0",
+    "lodash": "^4.17.21",
     "nuxt": "^2.14.12",
     "nuxt-property-decorator": "^2.9.1",
     "sass": "^1.32.8"
@@ -22,6 +28,7 @@
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@fortawesome/free-regular-svg-icons": "^5.15.2",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@nuxt/types": "^2.14.12",
     "@nuxt/typescript-build": "^2.0.4",
